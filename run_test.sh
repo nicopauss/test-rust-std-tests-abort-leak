@@ -6,9 +6,10 @@ set -o pipefail
 rust_toolchain="nightly"
 if [ -n "${RUSTUP_TOOLCHAIN:-}" ]; then
     rust_toolchain="${RUSTUP_TOOLCHAIN//bisector-/}"
-    rustup component add rust-src --toolchain "$rust_toolchain" 2>&1 | \
-        tee -a script_output.txt
 fi
+
+rustup component add rust-src --toolchain "$rust_toolchain" 2>&1 | \
+    tee -a script_output.txt
 
 RUSTFLAGS=-Zsanitizer=address \
     cargo \
